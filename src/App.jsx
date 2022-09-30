@@ -1,18 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Product from "./pages/Product";
-import Cart from "./pages/Cart";
+import Home from "./pages/Home/Home";
+import Login from "./pages/Login/Login";
+import Register from "./pages/Register/Register";
+import Product from "./pages/Product/Product";
+import NotFound from "./pages/NotFound/NotFound";
+import Cart from "./pages/Cart/Cart";
 import { popularProducts } from "./data";
+import datas from "./firebase/firebaseConfig";
 
 const App = () => {
   const [data, setData] = useState(popularProducts);
-  const [total,setTotal] = useState()
+  const [total, setTotal] = useState();
   const [badge, setBadge] = useState(0);
   const [basket, setBasket] = useState([]);
-  
+
+  useEffect(() => {
+   console.log(datas)
+  }, []);
   return (
     <div className="app">
       <Routes>
@@ -35,9 +40,19 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route
           path="/cart"
-          element={<Cart setBasket={setBasket} basket={basket} setBadge={setBadge} badge={badge} total={total} setTotal={setTotal}/>}
+          element={
+            <Cart
+              setBasket={setBasket}
+              basket={basket}
+              setBadge={setBadge}
+              badge={badge}
+              total={total}
+              setTotal={setTotal}
+            />
+          }
         />
         <Route path="/product" element={<Product />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );

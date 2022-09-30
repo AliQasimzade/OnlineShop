@@ -1,6 +1,5 @@
-import { Send } from "@material-ui/icons";
 import styled from "styled-components";
-import { mobile } from "../responsive";
+import { mobile } from "../../responsive";
 
 const Container = styled.div`
   height: 60vh;
@@ -11,7 +10,7 @@ const Container = styled.div`
   flex-direction: column;
 `;
 const Title = styled.h1`
-  font-size: 70px;
+  font-size: 50px;
   margin-bottom: 20px;
 `;
 
@@ -20,7 +19,6 @@ const Desc = styled.div`
   font-weight: 300;
   margin-bottom: 20px;
   ${mobile({ textAlign: "center" })}
-
 `;
 
 const InputContainer = styled.div`
@@ -46,19 +44,4 @@ const Button = styled.button`
   color: white;
 `;
 
-const Newsletter = () => {
-  return (
-    <Container>
-      <Title>Newsletter</Title>
-      <Desc>Get timely updates from your favorite products.</Desc>
-      <InputContainer>
-        <Input placeholder="Your email" />
-        <Button>
-          <Send />
-        </Button>
-      </InputContainer>
-    </Container>
-  );
-};
-
-export default Newsletter;
+export { Container, Input, Button, InputContainer, Desc, Title};

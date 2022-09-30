@@ -1,10 +1,4 @@
-import React from "react";
-import {
-  FavoriteBorderOutlined,
-  ShoppingCartOutlined,
-} from "@material-ui/icons";
 import styled from "styled-components";
-import { popularProducts } from "../data";
 
 const Info = styled.div`
   opacity: 0;
@@ -48,7 +42,7 @@ const Circle = styled.div`
 
 const Image = styled.img`
   height: 75%;
-  z-index: 2;
+  width: 100%
 `;
 
 const Icon = styled.button`
@@ -67,46 +61,4 @@ const Icon = styled.button`
     transform: scale(1.1);
   }
 `;
-
-const Product = ({
-  item,
-  setBadge,
-  badge,
-  data,
-  setBasket,
-  basket,
-
-}) => {
-  const handleAddCart = (id) => {
-    const product = basket.find((item) => item.id === id);
-    console.log(basket)
-    if (product) {
-      alert("You already added this cart");
-    } else {
-      setBadge(badge + 1);
-      setBasket([...basket,{
-        id:id,
-        count:1,
-        img: popularProducts[id - 1].img,
-        price: popularProducts[id - 1].price
-      }])
-    }
- 
-  };
-  return (
-    <Container>
-      <Circle />
-      <Image src={item.img} />
-      <Info>
-        <Icon onClick={() => handleAddCart(item.id)}>
-          <ShoppingCartOutlined />
-        </Icon>
-        <Icon>
-          <FavoriteBorderOutlined />
-        </Icon>
-      </Info>
-    </Container>
-  );
-};
-
-export default Product;
+export { Container, Info, Icon, Image, Circle };
