@@ -1,16 +1,21 @@
 import styled from "styled-components";
 
+const Content = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
 const Info = styled.div`
-
+  opacity: 0;
   width: 100%;
   height: 100%;
   position: absolute;
   top: 0;
   left: 0;
+  background-color: rgba(0, 0, 0, 0.2);
   z-index: 3;
   display: flex;
-  align-items: flex-start;
-  justify-content: space-evenly;
+  align-items: center;
+  justify-content: center;
   transition: all 0.5s ease;
   cursor: pointer;
 `;
@@ -18,7 +23,7 @@ const Info = styled.div`
 const Container = styled.div`
   flex: 1;
   margin: 5px;
-  min-width: 280px;
+  width: 320px;
   height: 350px;
   display: flex;
   align-items: center;
@@ -26,20 +31,14 @@ const Container = styled.div`
   background-color: #f5fbfd;
   position: relative;
 
-
-`;
-
-const Circle = styled.div`
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  background-color: white;
-  position: absolute;
+  &:hover ${Info} {
+    opacity: 1;
+  }
 `;
 
 const Image = styled.img`
   height: 75%;
-  width: 100%
+  width: 100%;
 `;
 
 const Icon = styled.button`
@@ -60,4 +59,4 @@ const Icon = styled.button`
     transform: scale(1.1);
   }
 `;
-export { Container, Info, Icon, Image, Circle };
+export { Container, Content, Info, Icon, Image };

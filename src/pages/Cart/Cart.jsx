@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { Add, Remove } from "@material-ui/icons";
-import { popularProducts } from "../../data";
 import Button from "@material-ui/core/Button";
 import {
   Container,
@@ -15,10 +14,11 @@ import {
   ProductAmount,
   ProductAmountContainer,
   ProductDetail,
-  ProductId,
   ProductPrice,
   ProductName,
+  ProductId,
   Details,
+  DetailsWrapper,
   Image,
   Info,
   TopText,
@@ -30,7 +30,7 @@ import {
   Wrapper,
 } from "./CartStyled";
 
-const Cart = ({ basket, badge, setBasket, setBadge }) => {
+const Cart = ({ basket, badge, setBasket, setBadge,data }) => {
   const handleAddCount = (id) => {
     const foundProduct = basket.find((item) => item.id === id);
     const newCartItems = basket.filter((item) => item.id !== id);
@@ -40,7 +40,7 @@ const Cart = ({ basket, badge, setBasket, setBadge }) => {
         ...foundProduct,
         count: foundProduct.count + 1,
         totalPrice:
-          foundProduct.totalPrice + popularProducts[id - 1].totalPrice,
+          foundProduct.totalPrice + data[id - 1].totalPrice,
       },
       ...newCartItems,
     ]);
@@ -50,7 +50,7 @@ const Cart = ({ basket, badge, setBasket, setBadge }) => {
     const foundProduct = basket.find((item) => item.id === id);
     const newCartItems = basket.filter((item) => item.id !== id);
 
-    if (foundProduct.count === popularProducts[id - 1].count) {
+    if (foundProduct.count === data[id - 1].count) {
       const newCartItems = basket.filter((item) => item.id !== id);
       setBasket(newCartItems);
       setBadge(badge - 1);
@@ -60,13 +60,18 @@ const Cart = ({ basket, badge, setBasket, setBadge }) => {
           ...foundProduct,
           count: foundProduct.count - 1,
           totalPrice:
-            foundProduct.totalPrice - popularProducts[id - 1].totalPrice,
+            foundProduct.totalPrice - data[id - 1].totalPrice,
         },
         ...newCartItems,
       ]);
       console.log(basket);
     }
   };
+  const onRemove = (product) => {
+    setBadge(badge - 1)
+   const newCartItems = basket.filter(item => item.id !== product.id);
+   setBasket(newCartItems)
+  }
 
   return (
     <Container>
@@ -89,18 +94,23 @@ const Cart = ({ basket, badge, setBasket, setBadge }) => {
               {basket.map((item) => (
                 <Product key={item.id}>
                   <ProductDetail>
+                    <div className="image" style={{width: "170px",height:"fit-content"}}>
                     <Image src={item.img} />
+                    </div>
                     <Details>
-                      <ProductName>
+                     <DetailsWrapper>
+                     <ProductName>
                         <b>
-                          Product: <span>{item.title}</span>
+                         <span>{item.name}</span>
                         </b>
                       </ProductName>
                       <ProductId>
                         <b>
-                          Price: <span>{item.price}</span>
+                         <span>{item.price} &#8380;</span>
                         </b>
                       </ProductId>
+                     </DetailsWrapper>
+                      <Button variant="outlined" style={{width:"100px"}}onClick={() => onRemove(item)}>Remove</Button>
                     </Details>
                   </ProductDetail>
                   <PriceDetail>

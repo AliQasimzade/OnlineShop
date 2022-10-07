@@ -3,21 +3,26 @@ import {
   FavoriteBorderOutlined,
   ShoppingCartOutlined,
 } from "@material-ui/icons";
-import { popularProducts } from "../../../data";
+
 import {
   Container,
   Info,
   Icon,
   Image,
-  Circle,
 } from "./ProductStyled";
 
-const Product = ({ item, setBadge, badge, setBasket, basket }) => {
+
+const Product = ({ item, setBadge, badge, setBasket, basket,data,login,open,setOpen,setOpenMsg }) => {
+ 
   const handleAddCart = (id) => {
     const product = basket.find((item) => item.id === id);
-    console.log(basket);
+  if(login){
     if (product) {
-      alert("You already added this cart");
+      setOpen(true)
+      setOpenMsg("You already added this cart");
+      setTimeout(() => {
+     setOpen(false)
+      }, 1000)
     } else {
       setBadge(badge + 1);
       setBasket([
@@ -25,21 +30,28 @@ const Product = ({ item, setBadge, badge, setBasket, basket }) => {
         {
           id: id,
           count: 1,
-          img: popularProducts[id - 1].img,
-          title: popularProducts[id - 1].title,
-          price: popularProducts[id - 1].price,
-          totalPrice: popularProducts[id - 1].totalPrice
+          img: data[id - 1].img,
+          name: data[id - 1].name,
+          price: data[id - 1].price,
+          totalPrice: data[id - 1].totalPrice
         },
       ]);
-      console.log(basket)
+    
     }
+  }else{
+  setOpenMsg("Please, Login")
+    setOpen(true)
+    setTimeout(() => {
+      setOpen(false)
+    },1500)
+  }
+    
   };
   return (
-    <Container>
-      <Circle />
+    <Container>  
       <div style={{zIndex: 2, width:"220px"}}>
       <Image src={item.img}  />
-      <p>{item.title}</p>
+      <p>{item.name}</p>
       <span>{item.price} <span>&#8380;</span></span>
       </div>
       <Info>       
@@ -47,7 +59,7 @@ const Product = ({ item, setBadge, badge, setBasket, basket }) => {
           <ShoppingCartOutlined />
         </Icon>
         <Icon>
-          <FavoriteBorderOutlined />
+          <FavoriteBorderOutlined />     
         </Icon>
       </Info>
     </Container>

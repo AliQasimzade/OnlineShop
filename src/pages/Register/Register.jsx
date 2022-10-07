@@ -14,7 +14,7 @@ import {
   Title,
 } from "./RegisterStyled";
 
-const Register = () => {
+const Register = ({ setLogin, setOpen, setOpenMsg }) => {
   const navigate = useNavigate();
   const nameRef = useRef(null);
   const surnameRef = useRef(null);
@@ -29,7 +29,6 @@ const Register = () => {
     e.preventDefault();
     let newUser = {
       email: emailRef.current.value,
-      password: passwordRef.current.value,
     };
     setUserAction(newUser);
     sendUserData();
@@ -37,15 +36,38 @@ const Register = () => {
 
   const sendUserData = async () => {
     try {
-      const user = await createUserWithEmailAndPassword(
+     await createUserWithEmailAndPassword(
         auth,
         emailRef.current.value,
         passwordRef.current.value
       );
-      console.log(user);
-      navigate("/");
+
+      setLogin(true);
+      setOpen(true);
+      setOpenMsg("Succesfully login")
+      setTimeout(() => {
+        navigate("/");
+        setOpen(false);
+      }, 1000);
     } catch (error) {
-      alert(error.message);
+      if (
+        nameRef.current.value === "" ||
+        surnameRef.current.value === "" ||
+        emailRef.current.value === "" ||
+        passwordRef.current.value === ""
+      ) {
+        setOpenMsg("Empty inputs or input");
+        setOpen(true);
+        setTimeout(() => {
+          setOpen(false);
+        }, 1000);
+      } else {
+        setOpen(true);
+        setOpenMsg("This user already logged");
+        setTimeout(() => {
+          setOpen(false);
+        }, 1000);
+      }
     }
   };
   return (
