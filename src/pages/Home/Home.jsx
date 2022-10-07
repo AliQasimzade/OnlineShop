@@ -17,7 +17,10 @@ const Home = ({
   setShowListOne,
   setShowListTwo,
   login,
-  setLogin
+  setLogin,
+  setOpen,
+  setOpenMsg,
+  open,
 }) => {
   return (
     <div>
@@ -34,6 +37,8 @@ const Home = ({
       <Slider />
       <Categories />
       <Products
+        open={open}
+        setOpen={setOpen}
         setBadge={setBadge}
         badge={badge}
         setData={setData}
@@ -42,6 +47,7 @@ const Home = ({
         basket={basket}
         login={login}
         setLogin={setLogin}
+        setOpenMsg={setOpenMsg}
       />
       <Newsletter />
       <Footer />

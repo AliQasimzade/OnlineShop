@@ -9,13 +9,19 @@ const Products = ({
   data,
   setBasket,
   basket,
-  login
+  login,
+  open,
+  setOpen,
+  setOpenMsg,
 }) => {
   return (
     <Container>
       {data.map((item) => (
         <Suspense fallback={<div>...Loading</div>} key={item.id}>
           <Product
+            open={open}
+            setOpenMsg={setOpenMsg}
+            setOpen={setOpen}
             item={item}
             key={item.id}
             setBadge={setBadge}
@@ -24,8 +30,7 @@ const Products = ({
             data={data}
             setBasket={setBasket}
             basket={basket}
-           login={login}
-          
+            login={login}
           />
         </Suspense>
       ))}

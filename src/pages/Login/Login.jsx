@@ -1,10 +1,11 @@
-import React, { useRef } from "react";
+import React, { useRef,useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/firebaseConfig";
 import { Container, Button, Input, Form, Title, Wrapper } from "./LoginStyled";
 
-const Login = ({ setLogin,setUserAction }) => {
+const Login = ({ setLogin,setUserAction,setOpen,setOpenMsg }) => {
+
   const navigate = useNavigate();
   const emailRef = useRef("");
   const passWordRef = useRef("");
@@ -18,23 +19,32 @@ const Login = ({ setLogin,setUserAction }) => {
         passWordRef.current.value
       );
       setLogin(true);
-      alert("Success");
+      setOpen(true)
+      setOpenMsg("Success");
       let newUser = {
         email: emailRef.current.value
       };
 
       setUserAction(newUser);
-      navigate("/");
+      setTimeout(() => {
+        navigate("/");
+      }, 1500)
     } catch (error) {
-      alert(error);
+      setOpen(true)
+      setOpenMsg("Please,correct user login");
     }
   };
+  useEffect(() => {
+    setTimeout(() => {
+     setOpen(false)
+    }, 1500)
+  })
   return (
     <Container>
       <Wrapper>
         <Title>SIGN IN</Title>
         <Form onSubmit={(e) => login(e)}>
-          <Input placeholder="Email" type="email" ref={emailRef} />
+          <Input placeholder="Email" type="email" autoComplete ref={emailRef} />
           <Input placeholder="Password" type="password" ref={passWordRef} />
           <Button>LOGIN</Button>
           <Link to="/">DO NOT YOU REMEMBER THE PASSWORD?</Link>

@@ -60,3 +60,4 @@ const Icon = styled.button`
   }
 `;
 export { Container, Content, Info, Icon, Image };
+

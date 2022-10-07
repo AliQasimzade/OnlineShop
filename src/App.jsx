@@ -7,22 +7,25 @@ import NotFound from "./pages/NotFound/NotFound";
 import Cart from "./pages/Cart/Cart";
 import Men from "./pages/Men/Men";
 import Women from "./pages/Women/Women";
-import Snackbar from "./components/SnackbarItem/SnackbarItem";
+import SnackbarAlert from "./components/SnackbarAlert/SnackbarAlert";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import {UserLogin} from "./store/atoms";
-import {addBasket} from "./store/atoms";
-import {addBadge} from "./store/atoms"
-import {userData} from "./store/atoms";
+import { UserLogin } from "./store/atoms";
+import { addBasket } from "./store/atoms";
+import { addBadge } from "./store/atoms";
+import { userData } from "./store/atoms";
 
 const App = () => {
+
   const [data, setData] = useState([]);
   const [badge, setBadge] = useRecoilState(addBadge);
   const [basket, setBasket] = useRecoilState(addBasket);
   const [showListOne, setShowListOne] = useState(false);
   const [showListTwo, setShowListTwo] = useState(false);
-  const [login, setLogin] = useRecoilState(UserLogin)
+onst [login, setLogin] = useRecoilState(UserLogin);
   const [userAction, setUserAction] = useRecoilState(userData);
+  const [open, setOpen] = useState(false);
+  const [openMsg, setOpenMsg] = useState('')
 
   window.onbeforeunload = () => {
     setLogin(false)
@@ -40,14 +43,24 @@ const App = () => {
       setData(datas);
     });
   }, []);
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
   return (
     <div className="app">
-      <Snackbar />
+      <SnackbarAlert open={open} handleClose={handleClose} openMsg={openMsg}/>
       <Routes>
         <Route
           path="/"
           element={
             <Home
+              open={open}
+              setOpen={setOpen}
+              setOpenMsg={setOpenMsg}
               data={data && data}
               setData={setData}
               setBasket={setBasket}
@@ -63,8 +76,11 @@ const App = () => {
             />
           }
         />
-          <Route path="/login" element={<Login setLogin={setLogin} setUserAction={setUserAction}/>} />
-        <Route path="/register" element={<Register setLogin={setLogin}/>} />
+        <Route
+          path="/login"
+          element={<Login setLogin={setLogin} setUserAction={setUserAction} setOpen={setOpen} setOpenMsg={setOpenMsg}/>}
+        />
+        <Route path="/register" element={<Register setLogin={setLogin} setOpen={setOpen} setOpenMsg={setOpenMsg}/>} />
         <Route
           path="/cart"
           element={
@@ -91,7 +107,6 @@ const App = () => {
               showListTwo={showListTwo}
               setShowListTwo={setShowListTwo}
               login={login}
-              
             />
           }
         />

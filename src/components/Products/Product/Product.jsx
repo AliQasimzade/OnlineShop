@@ -12,13 +12,18 @@ import {
 } from "./ProductStyled";
 import { useNavigate } from "react-router-dom";
 
-const Product = ({ item, setBadge, badge, setBasket, basket,data,login }) => {
-  const navigate = useNavigate()
+
+const Product = ({ item, setBadge, badge, setBasket, basket,data,login,open,setOpen,setOpenMsg }) => {
+ 
   const handleAddCart = (id) => {
     const product = basket.find((item) => item.id === id);
   if(login){
     if (product) {
-      alert("You already added this cart");
+      setOpen(true)
+      setOpenMsg("You already added this cart");
+      setTimeout(() => {
+     setOpen(false)
+      }, 1000)
     } else {
       setBadge(badge + 1);
       setBasket([
@@ -35,8 +40,11 @@ const Product = ({ item, setBadge, badge, setBasket, basket,data,login }) => {
     
     }
   }else{
-    navigate("/login")
-    alert("Please, login")
+  setOpenMsg("Please, Login")
+    setOpen(true)
+    setTimeout(() => {
+      setOpen(false)
+    },1500)
   }
     
   };
