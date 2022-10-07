@@ -1,5 +1,7 @@
-import Product from "./Product/Product";
+import React, { lazy, Suspense } from "react";
 import { Container } from "./ProductsStyled";
+const Product = lazy(() => import("./Product/Product"));
+
 const Products = ({
   setBadge,
   badge,
@@ -7,24 +9,25 @@ const Products = ({
   data,
   setBasket,
   basket,
-  total,
-  setTotal,
+  login
 }) => {
   return (
     <Container>
       {data.map((item) => (
-        <Product
-          item={item}
-          key={item.id}
-          setBadge={setBadge}
-          badge={badge}
-          setData={setData}
-          data={data}
-          setBasket={setBasket}
-          basket={basket}
-          total={total}
-          setTotal={setTotal}
-        />
+        <Suspense fallback={<div>...Loading</div>} key={item.id}>
+          <Product
+            item={item}
+            key={item.id}
+            setBadge={setBadge}
+            badge={badge}
+            setData={setData}
+            data={data}
+            setBasket={setBasket}
+            basket={basket}
+           login={login}
+          
+          />
+        </Suspense>
       ))}
     </Container>
   );

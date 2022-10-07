@@ -61,19 +61,28 @@ const ProductDetail = styled.div`
 `;
 
 const Image = styled.img`
-  width: 200px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;
 
 const Details = styled.div`
   padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
 `;
 
-const ProductName = styled.span``;
+const DetailsWrapper = styled.div`
+ display:flex;
+ flex-direction: column;
+`
 
-const ProductId = styled.span``;
+const ProductName = styled.span`
+margin-bottom: 15px;`;
+
+const ProductId = styled.span`
+margin-bottom: 15px;`;
 
 const PriceDetail = styled.div`
   flex: 1;
@@ -147,10 +156,11 @@ export {
   ProductAmount,
   ProductAmountContainer,
   ProductDetail,
-  ProductId,
   ProductPrice,
+  ProductId,
   ProductName,
   Details,
+  DetailsWrapper,
   Image,
   Info,
   TopText,

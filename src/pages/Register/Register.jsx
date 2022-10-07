@@ -14,7 +14,7 @@ import {
   Title,
 } from "./RegisterStyled";
 
-const Register = () => {
+const Register = ({setLogin}) => {
   const navigate = useNavigate();
   const nameRef = useRef(null);
   const surnameRef = useRef(null);
@@ -43,6 +43,7 @@ const Register = () => {
         passwordRef.current.value
       );
       console.log(user);
+      setLogin(true)
       navigate("/");
     } catch (error) {
       alert(error.message);

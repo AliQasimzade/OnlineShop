@@ -2,15 +2,13 @@ import React, { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/firebaseConfig";
-import { useRecoilState } from "recoil";
-import { userData } from "../../store/atoms";
 import { Container, Button, Input, Form, Title, Wrapper } from "./LoginStyled";
 
-const Login = () => {
+const Login = ({ setLogin,setUserAction }) => {
   const navigate = useNavigate();
   const emailRef = useRef("");
   const passWordRef = useRef("");
-  const [userAction, setUserAction] = useRecoilState(userData);
+
   const login = async (e) => {
     e.preventDefault();
     try {
@@ -19,13 +17,11 @@ const Login = () => {
         emailRef.current.value,
         passWordRef.current.value
       );
-
+      setLogin(true);
       alert("Success");
       let newUser = {
-        email: emailRef.current.value,
-        password: passWordRef.current.value,
+        email: emailRef.current.value
       };
-      console.log(userAction);
 
       setUserAction(newUser);
       navigate("/");

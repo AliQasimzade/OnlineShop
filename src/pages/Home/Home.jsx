@@ -12,12 +12,25 @@ const Home = ({
   basket,
   badge,
   setBadge,
-  total,
-  setTotal,
+  showListOne,
+  showListTwo,
+  setShowListOne,
+  setShowListTwo,
+  login,
+  setLogin
 }) => {
   return (
     <div>
-      <Navbar badge={badge} />
+      <Navbar
+        badge={badge}
+        showListOne={showListOne}
+        showListTwo={showListTwo}
+        setShowListOne={setShowListOne}
+        setShowListTwo={setShowListTwo}
+        setBadge={setBadge}
+        setLogin={setLogin}
+        setBasket={setBasket}
+      />
       <Slider />
       <Categories />
       <Products
@@ -27,8 +40,8 @@ const Home = ({
         data={data}
         setBasket={setBasket}
         basket={basket}
-        total={total}
-        setTotal={setTotal}
+        login={login}
+        setLogin={setLogin}
       />
       <Newsletter />
       <Footer />
